@@ -5,6 +5,13 @@ import pygame
 from constants import *
 from player import *
 
+# create groups
+updatable_group = pygame.sprite.Group()
+drawable_group = pygame.sprite.Group()
+
+# add class var to player for containers
+Player.containers = (updatable_group, drawable_group)
+
 # make sure VENV is running - source venv/bin/activate
 
 def main():
@@ -38,16 +45,18 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        # - check for player movement
-        p1.update(dt)
+        # - update all updatables in group
+        updatable_group.update(dt)
 
         # 2: Update the game world
 
         # 3: Draw the game to the screen
         # - fill screen with black
         pygame.Surface.fill(screen, "black")
-        # - update player
-        p1.draw(screen) 
+
+        # update drawables in group
+        for drawable in drawable_group:
+            drawable.draw(screen)
         # - update entire display
         pygame.display.flip()
         # - tick = 60 FPS, return delta time in seconds
