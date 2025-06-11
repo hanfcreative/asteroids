@@ -3,15 +3,23 @@
 # throughout this file
 import pygame
 from constants import *
+from player import *
 
 # make sure VENV is running - source venv/bin/activate
 
 def main():
     # initialize pygame and vars
+    # - initialize pygame
     pygame.init()
+    # - init game loop as active
     game_loop_running = True
+    # - init display settings
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-    
+    # - instantiate player
+    spawn_x = SCREEN_WIDTH / 2
+    spawn_y = SCREEN_HEIGHT / 2
+    p1 = Player(spawn_x, spawn_y)
+
     # boot message
     print("Starting Asteroids!")
     print(f"Screen width: {SCREEN_WIDTH}")
@@ -20,6 +28,8 @@ def main():
     # create game clock
     game_clock = pygame.time.Clock()
     dt = 0
+
+    # create player
 
     # game loop
     while game_loop_running:
@@ -34,6 +44,8 @@ def main():
         # 3: Draw the game to the screen
         # - fill screen with black
         pygame.Surface.fill(screen, "black")
+        # - update player
+        p1.draw(screen) 
         # - update entire display
         pygame.display.flip()
         # - tick = 60 FPS, return delta time in seconds
