@@ -19,10 +19,10 @@ class Asteroid(CircleShape):
     def split(self):
         # destroy original asteroid
         self.kill()
-        print("Asteroid hit")
+        # print("Asteroid hit")
         # if asteroid is smallest size do not replace
         if self.radius <= ASTEROID_MIN_RADIUS:
-            print("Asteroid is too small. No asteroids to spawn.")
+            # print("Asteroid is too small. No asteroids to spawn.")
             return
         # otherwise replace asteroid with two smaller asteroids
         else:
@@ -32,6 +32,6 @@ class Asteroid(CircleShape):
              self.radius -= ASTEROID_MIN_RADIUS
              new_asteroid_1 = Asteroid(self.position.x, self.position.y, self.radius)
              new_asteroid_2 = Asteroid(self.position.x, self.position.y, self.radius)
-             print(f"Spawning new asteroids: {new_asteroid_1}, {new_asteroid_2}")
+             # print(f"Spawning new asteroids: {new_asteroid_1}, {new_asteroid_2}")
              new_asteroid_1.velocity = vector1 * ASTEROID_VELOCITY_MULT
              new_asteroid_2.velocity = vector2 * ASTEROID_VELOCITY_MULT
