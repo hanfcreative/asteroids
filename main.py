@@ -7,16 +7,19 @@ from player import *
 from asteroid import *
 from asteroidfield import *
 import sys
+from shot import *
 
 # create groups
 updatable_group = pygame.sprite.Group()
 drawable_group = pygame.sprite.Group()
 asteroids_group = pygame.sprite.Group()
+shots_group = pygame.sprite.Group()
 
 # add class var for containers
 Player.containers = (updatable_group, drawable_group)
 Asteroid.containers = (asteroids_group, updatable_group, drawable_group)
 AsteroidField.containers = (updatable_group)
+Shot.containers = (shots_group, updatable_group, drawable_group)
 
 # make sure VENV is running - source venv/bin/activate
 
