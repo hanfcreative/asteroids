@@ -67,6 +67,13 @@ def main():
             # - if ship collides then Game Over
             if ship_collision == True:
                 sys.exit("Game over!")
+        # - check for collisions between bullets and asteroids
+        for asteroid in asteroids_group:
+            for bullet in shots_group:
+                asteroid_collision = asteroid.check_collision(bullet)
+                if asteroid_collision == True:
+                    bullet.kill()
+                    asteroid.kill()
 
         # 3: Draw the game to the screen
         # - fill screen with black
