@@ -4,13 +4,19 @@
 import pygame
 from constants import *
 from player import *
+from asteroid import *
+from asteroidfield import *
+import sys
 
 # create groups
 updatable_group = pygame.sprite.Group()
 drawable_group = pygame.sprite.Group()
+asteroids_group = pygame.sprite.Group()
 
-# add class var to player for containers
+# add class var for containers
 Player.containers = (updatable_group, drawable_group)
+Asteroid.containers = (asteroids_group, updatable_group, drawable_group)
+AsteroidField.containers = (updatable_group)
 
 # make sure VENV is running - source venv/bin/activate
 
@@ -22,6 +28,8 @@ def main():
     game_loop_running = True
     # - init display settings
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    # - instantiate asteroid field
+    asteroid_field = AsteroidField()
     # - instantiate player
     spawn_x = SCREEN_WIDTH / 2
     spawn_y = SCREEN_HEIGHT / 2
@@ -49,6 +57,13 @@ def main():
         updatable_group.update(dt)
 
         # 2: Update the game world
+        # - check for collisions between player and asteroids
+        # - It's okay for asteroids to simply pass through each other.
+        for asteroid in asteroids_group:
+            ship_collision = p1.check_collision(asteroid)
+            # - if ship collides then Game Over
+            if ship_collision == True:
+                sys.exit("Game over!")
 
         # 3: Draw the game to the screen
         # - fill screen with black
