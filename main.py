@@ -73,7 +73,7 @@ def main():
                 asteroid_collision = asteroid.check_collision(bullet)
                 if asteroid_collision == True:
                     bullet.kill()
-                    asteroid.kill()
+                    asteroid.split()
 
         # 3: Draw the game to the screen
         # - fill screen with black
