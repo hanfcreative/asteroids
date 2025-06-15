@@ -13,6 +13,7 @@ class Asteroid(CircleShape):
         # print(f"Drawing asteroid")
 
     def update(self, dt):
+        self.screen_wrap_simple()
         self.position += (self.velocity * dt)
         # print(f"Updating asteroid: {self.position}")
 
