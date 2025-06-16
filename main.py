@@ -11,15 +11,17 @@ from shot import *
 
 # create groups
 updatable_group = pygame.sprite.Group()
-drawable_group = pygame.sprite.Group()
+drawable_back_group = pygame.sprite.Group()
+drawable_mid_group = pygame.sprite.Group()
+drawable_front_group = pygame.sprite.Group()
 asteroids_group = pygame.sprite.Group()
 shots_group = pygame.sprite.Group()
 
 # add class var for containers
-Player.containers = (updatable_group, drawable_group)
-Asteroid.containers = (asteroids_group, updatable_group, drawable_group)
+Player.containers = (updatable_group, drawable_mid_group)
+Asteroid.containers = (asteroids_group, updatable_group, drawable_mid_group)
 AsteroidField.containers = (updatable_group)
-Shot.containers = (shots_group, updatable_group, drawable_group)
+Shot.containers = (shots_group, updatable_group, drawable_mid_group)
 
 # make sure VENV is running - source venv/bin/activate
 
@@ -79,8 +81,12 @@ def main():
         # - fill screen with black
         pygame.Surface.fill(screen, "black")
 
-        # update drawables in group
-        for drawable in drawable_group:
+        # update drawables in all drawable groups, background to foreground
+        for drawable in drawable_back_group:
+            drawable.draw(screen)
+        for drawable in drawable_mid_group:
+            drawable.draw(screen)
+        for drawable in drawable_front_group:
             drawable.draw(screen)
         # - update entire display
         pygame.display.flip()
