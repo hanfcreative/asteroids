@@ -25,7 +25,7 @@ Player.containers = (updatable_group, drawable_mid_group)
 Asteroid.containers = (asteroids_group, updatable_group, drawable_mid_group)
 AsteroidField.containers = (updatable_group)
 Shot.containers = (shots_group, updatable_group, drawable_mid_group)
-Star.containers = (celestial_objects_group, drawable_back_group)
+Star.containers = (celestial_objects_group, updatable_group, drawable_back_group)
 NightSkyManager.containers = (updatable_group)
 
 # make sure VENV is running - source venv/bin/activate
@@ -59,8 +59,6 @@ def main():
     game_clock = pygame.time.Clock()
     dt = 0
 
-    # create player
-
     # game loop
     while game_loop_running:
         # 1: Check for player inputs
@@ -68,8 +66,11 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
-        # - update all updatables in group
+        # - update all update(dt) in group
         updatable_group.update(dt)
+        # - apply parallax
+        for star in celestial_objects_group:
+            star.apply_parallax(dt, p1.last_velocity)
 
         # 2: Update the game world
         # - check for collisions between player and asteroids

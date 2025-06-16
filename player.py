@@ -11,6 +11,7 @@ class Player(CircleShape):
         self.radius = PLAYER_RADIUS
         self.rotation = 0
         self.timer = 0
+        self.last_velocity = pygame.Vector2(0,0)
 
     # in the player class
     def triangle(self):
@@ -48,8 +49,10 @@ class Player(CircleShape):
 
     def move(self, dt):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        velocity = forward * PLAYER_SPEED
+        self.position += velocity * dt
+        self.last_velocity = velocity
         self.screen_wrap_simple()
-        self.position += forward * PLAYER_SPEED * dt
 
     def shoot(self):
         # player can't shoot if timer is greater thsn 0

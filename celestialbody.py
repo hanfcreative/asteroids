@@ -1,4 +1,5 @@
 import pygame
+from constants import *
 
 class CelestialBody(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -17,3 +18,7 @@ class CelestialBody(pygame.sprite.Sprite):
     def update(self, dt):
         # sub-classes must override
         pass
+
+    def screen_wrap_simple(self):
+        self.position.x %= SCREEN_WIDTH
+        self.position.y %= SCREEN_HEIGHT

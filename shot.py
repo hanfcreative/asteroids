@@ -12,5 +12,7 @@ class Shot(CircleShape):
         # print(f"Drawing bullet")
 
     def update(self, dt):
+        # bullet screen wrap???
+        # self.screen_wrap_simple()
         self.position += (self.velocity * dt)
         # print(f"Updating bullet: {self.position}")
