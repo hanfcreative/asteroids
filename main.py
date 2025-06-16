@@ -10,6 +10,7 @@ import sys
 from shot import *
 from star import *
 from nightskymanager import *
+from devsettings import ENABLE_PARALLAX
 
 # create groups
 updatable_group = pygame.sprite.Group()
@@ -69,8 +70,9 @@ def main():
         # - update all update(dt) in group
         updatable_group.update(dt)
         # - apply parallax
-        for star in celestial_objects_group:
-            star.apply_parallax(dt, p1.last_velocity)
+        if ENABLE_PARALLAX:
+            for star in celestial_objects_group:
+                star.apply_parallax(dt, p1.last_velocity)
 
         # 2: Update the game world
         # - check for collisions between player and asteroids
