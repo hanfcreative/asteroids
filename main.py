@@ -8,6 +8,8 @@ from asteroid import *
 from asteroidfield import *
 import sys
 from shot import *
+from star import *
+from nightskymanager import *
 
 # create groups
 updatable_group = pygame.sprite.Group()
@@ -16,12 +18,15 @@ drawable_mid_group = pygame.sprite.Group()
 drawable_front_group = pygame.sprite.Group()
 asteroids_group = pygame.sprite.Group()
 shots_group = pygame.sprite.Group()
+celestial_objects_group = pygame.sprite.Group()
 
 # add class var for containers
 Player.containers = (updatable_group, drawable_mid_group)
 Asteroid.containers = (asteroids_group, updatable_group, drawable_mid_group)
 AsteroidField.containers = (updatable_group)
 Shot.containers = (shots_group, updatable_group, drawable_mid_group)
+Star.containers = (celestial_objects_group, drawable_back_group)
+NightSkyManager.containers = (updatable_group)
 
 # make sure VENV is running - source venv/bin/activate
 
@@ -39,6 +44,11 @@ def main():
     spawn_x = SCREEN_WIDTH / 2
     spawn_y = SCREEN_HEIGHT / 2
     p1 = Player(spawn_x, spawn_y)
+
+    #init night sky and starfield
+    nightsky = NightSkyManager()
+    # print(f"{len(drawable_back_group)} stars in drawable_back_group")
+
 
     # boot message
     print("Starting Asteroids!")
