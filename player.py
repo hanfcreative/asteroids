@@ -48,7 +48,8 @@ class Player(CircleShape):
             self.shoot()
 
         if not self.moving:
-            self.last_velocity = pygame.Vector2(0,0)
+            if not NIGHTSKY_PARALLAX_BEHAVIOR[NIGHTSKY_PARALLAX_MODE]["retain_velocity_on_stop"]:
+                self.last_velocity = pygame.Vector2(0,0)
 
         # update timer
         self.timer -= dt
