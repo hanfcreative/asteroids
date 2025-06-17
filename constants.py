@@ -25,6 +25,9 @@ NIGHTSKY_NUM_STARS = 100
 # for 60 FPS: 1 = very slow change, 60 = instant jump tp target
 # NIGHTSKY_PARALLAX_EASE <= 1 / dt ≈ 60
 NIGHTSKY_PARALLAX_EASE = 5
+# multiplier currently only used in hybrid mode. add to other modes?
+# currently screen wrap can not keep up with. consider changing wrap math 
+NIGHTSKY_PARALLAX_MOVE_MULTIPLIER = 2.0
 # options: "arcade", "realistic", "smooth", "hybrid"
 NIGHTSKY_PARALLAX_MODE = "hybrid"
 NIGHTSKY_PARALLAX_BEHAVIOR = {

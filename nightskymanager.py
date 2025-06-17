@@ -26,14 +26,24 @@ class NightSkyManager(pygame.sprite.Sprite):
 
     def update_parallax(self, dt, player):
         #is there a better name for targe? perhaps velocity_target?
-        target = player.last_velocity
+        velocity_target = player.last_velocity
 
+        # velocity multiplier when moving
+        if NIGHTSKY_PARALLAX_MODE == "hybrid":
+            if player.moving:
+                adjusted_velocity = velocity_target * NIGHTSKY_PARALLAX_MOVE_MULTIPLIER
+            else:
+                adjusted_velocity = velocity_target
+        else:
+            adjusted_velocity = velocity_target
+
+        # set parallex behavior for modes
         if NIGHTSKY_PARALLAX_MODE == "arcade":
-            self.celestial_body_velocity = target
+            self.celestial_body_velocity = velocity_target
 
         elif NIGHTSKY_PARALLAX_MODE == "realistic":
             if player.moving:
-                self.celestial_body_velocity = target
+                self.celestial_body_velocity = velocity_target
             else:
                 self.celestial_body_velocity = pygame.Vector2(0, 0)
 
@@ -42,7 +52,7 @@ class NightSkyManager(pygame.sprite.Sprite):
 
         elif NIGHTSKY_PARALLAX_MODE == "hybrid":
             ambient_drift = pygame.Vector2(10, 0).rotate(pygame.time.get_ticks() * 0.01)
-            blended = target + ambient_drift * (1 - target.length() / PLAYER_SPEED)
+            blended = adjusted_velocity + ambient_drift * (1 - velocity_target.length() / PLAYER_SPEED)
             self.celestial_body_velocity = self.celestial_body_velocity.lerp(blended, NIGHTSKY_PARALLAX_EASE * dt)
 
         # apply desired parallax to all celestial objects
