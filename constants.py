@@ -30,6 +30,7 @@ NIGHTSKY_PARALLAX_EASE = 5
 NIGHTSKY_PARALLAX_MOVE_MULTIPLIER = 20.0
 # options: "arcade", "realistic", "smooth", "hybrid"
 NIGHTSKY_PARALLAX_MODE = "hybrid"
+# do we stil need? switched to calculating velocity two different ways
 NIGHTSKY_PARALLAX_BEHAVIOR = {
     "arcade": {
         "retain_velocity_on_stop": True,

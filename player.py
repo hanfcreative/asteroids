@@ -30,23 +30,44 @@ class Player(CircleShape):
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
 
+    def get_input_velocity(self):
+        keys = pygame.key.get_pressed()
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
+        velocity = pygame.Vector2(0, 0)
+
+        if keys[pygame.K_w] or keys[pygame.K_UP]:
+            velocity += forward * PLAYER_SPEED
+        if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            velocity -= forward * PLAYER_SPEED
+
+        return velocity
+
     def update(self, dt):
         # init moving
         self.moving = False
         # manage input
         keys = pygame.key.get_pressed()
+        input_velocity = pygame.Vector2(0, 0)
+        forward = pygame.Vector2(0, 1).rotate(self.rotation)
 
         if keys[pygame.K_a] or keys[pygame.K_LEFT]:
             self.rotate(-dt)
         if keys[pygame.K_d] or keys[pygame.K_RIGHT]:
             self.rotate(dt)
         if keys[pygame.K_w] or keys[pygame.K_UP]:
+            input_velocity += forward * PLAYER_SPEED
             self.move(dt)
         if keys[pygame.K_s] or keys[pygame.K_DOWN]:
+            input_velocity -= forward * PLAYER_SPEED
             self.move(-dt)
         if keys[pygame.K_SPACE]:
             self.shoot()
 
+        # Even if not moving, check for forward/backward input to ensure last_velocity is accurate
+        if input_velocity.length_squared() > 0:
+            self.last_velocity = input_velocity
+        
+        # delete with the dictionary?
         if not self.moving:
             if not NIGHTSKY_PARALLAX_BEHAVIOR[NIGHTSKY_PARALLAX_MODE]["retain_velocity_on_stop"]:
                 self.last_velocity = pygame.Vector2(0,0)

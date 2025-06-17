@@ -25,32 +25,30 @@ class NightSkyManager(pygame.sprite.Sprite):
         # print("Starfield generated.")
 
     def update_parallax(self, dt, player):
-        #is there a better name for targe? perhaps velocity_target?
-        velocity_target = player.last_velocity
-
-        # velocity multiplier when moving
-        if NIGHTSKY_PARALLAX_MODE == "hybrid":
-            if player.moving:
-                adjusted_velocity = velocity_target * NIGHTSKY_PARALLAX_MOVE_MULTIPLIER
-            else:
-                adjusted_velocity = velocity_target
-        else:
-            adjusted_velocity = velocity_target
-
         # set parallex behavior for modes
         if NIGHTSKY_PARALLAX_MODE == "arcade":
+            velocity_target = player.last_velocity
             self.celestial_body_velocity = velocity_target
 
         elif NIGHTSKY_PARALLAX_MODE == "realistic":
+            velocity_target = player.get_input_velocity()
             if player.moving:
                 self.celestial_body_velocity = velocity_target
             else:
                 self.celestial_body_velocity = pygame.Vector2(0, 0)
 
         elif NIGHTSKY_PARALLAX_MODE == "smooth":
-            self.celestial_body_velocity = self.celestial_body_velocity.lerp(target, NIGHTSKY_PARALLAX_EASE * dt)
+            velocity_target = player.get_input_velocity()
+            self.celestial_body_velocity = self.celestial_body_velocity.lerp(velocity_target, NIGHTSKY_PARALLAX_EASE * dt)
 
         elif NIGHTSKY_PARALLAX_MODE == "hybrid":
+            velocity_target = player.last_velocity
+            # velocity mult while moving
+            if player.moving:
+                adjusted_velocity = velocity_target * NIGHTSKY_PARALLAX_MOVE_MULTIPLIER
+            else:
+                adjusted_velocity = velocity_target
+            
             ambient_drift = pygame.Vector2(10, 0).rotate(pygame.time.get_ticks() * 0.01)
             blended = adjusted_velocity + ambient_drift * (1 - velocity_target.length() / PLAYER_SPEED)
             self.celestial_body_velocity = self.celestial_body_velocity.lerp(blended, NIGHTSKY_PARALLAX_EASE * dt)
