@@ -27,7 +27,7 @@ NIGHTSKY_NUM_STARS = 100
 NIGHTSKY_PARALLAX_EASE = 5
 # multiplier currently only used in hybrid mode. add to other modes?
 # currently screen wrap can not keep up with. consider changing wrap math 
-NIGHTSKY_PARALLAX_MOVE_MULTIPLIER = 2.0
+NIGHTSKY_PARALLAX_MOVE_MULTIPLIER = 20.0
 # options: "arcade", "realistic", "smooth", "hybrid"
 NIGHTSKY_PARALLAX_MODE = "hybrid"
 NIGHTSKY_PARALLAX_BEHAVIOR = {

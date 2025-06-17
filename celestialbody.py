@@ -23,9 +23,20 @@ class CelestialBody(pygame.sprite.Sprite):
         pass
 
     def screen_wrap_simple(self):
-        self.position.x %= SCREEN_WIDTH
-        self.position.y %= SCREEN_HEIGHT
+        # old screen wrap
+        # self.position.x %= SCREEN_WIDTH
+        # self.position.y %= SCREEN_HEIGHT
+
+        while self.position.x < 0:
+            self.position.x += SCREEN_WIDTH
+        while self.position.x >= SCREEN_WIDTH:
+            self.position.x -= SCREEN_WIDTH
+
+        while self.position.y < 0:
+            self.position.y += SCREEN_HEIGHT
+        while self.position.y >= SCREEN_HEIGHT:
+            self.position.y -= SCREEN_HEIGHT
 
     def update_parallax(self, dt, velocity):
         self.position -= velocity * self.parallax_factor * dt
-        self.screen_wrap_simple
+        self.screen_wrap_simple()
