@@ -22,3 +22,6 @@ STAR_PARALLAX_MIN = 0.05
 STAR_PARALLAX_MAX = 0.3
 
 NIGHTSKY_NUM_STARS = 100
+# for 60 FPS: 1 = very slow change, 60 = instant jump tp target
+# NIGHTSKY_PARALLAX_EASE <= 1 / dt ≈ 60
+NIGHTSKY_PARALLAX_EASE = 1

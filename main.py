@@ -47,7 +47,7 @@ def main():
     p1 = Player(spawn_x, spawn_y)
 
     #init night sky and starfield
-    nightsky = NightSkyManager()
+    nightsky = NightSkyManager(celestial_objects_group)
     # print(f"{len(drawable_back_group)} stars in drawable_back_group")
 
 
@@ -71,10 +71,15 @@ def main():
         updatable_group.update(dt)
         # - apply parallax
         if ENABLE_PARALLAX:
-            for star in celestial_objects_group:
-                star.apply_parallax(dt, p1.last_velocity)
+            #deprecated - delete
+            # for star in celestial_objects_group:
+                # star.apply_parallax(dt, p1.last_velocity)
+
+            # celestial body manager parallax update
+            nightsky.update_parallax(dt, p1)
 
         # 2: Update the game world
+
         # - check for collisions between player and asteroids
         # - It's okay for asteroids to simply pass through each other.
         for asteroid in asteroids_group:

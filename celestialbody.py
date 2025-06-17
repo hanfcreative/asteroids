@@ -11,6 +11,9 @@ class CelestialBody(pygame.sprite.Sprite):
         self.position = pygame.Vector2(x, y)
         self.velocity = pygame.Vector2(0, 0)
 
+        # default, override in child
+        self.parallax_factor = 1.0
+
     def draw(self, screen):
         # sub-classes must override
         pass
@@ -22,3 +25,7 @@ class CelestialBody(pygame.sprite.Sprite):
     def screen_wrap_simple(self):
         self.position.x %= SCREEN_WIDTH
         self.position.y %= SCREEN_HEIGHT
+
+    def update_parallax(self, dt, velocity):
+        self.position -= velocity * self.parallax_factor * dt
+        self.screen_wrap_simple
